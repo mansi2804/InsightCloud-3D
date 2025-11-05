@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from .utils import fetch_article
 
 app = FastAPI(title="InsightCloud-3D API")
 
