@@ -1,8 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, OrbitControls } from '@react-three/drei';
-import { Group } from 'three';
+import { Group, Vector3 } from 'three';
 import type { KeywordData } from '../types';
+import { Tooltip } from './Tooltip3D';
 
 interface WordCloudProps {
     keywords: KeywordData[];
@@ -15,20 +16,30 @@ function Word({ word, weight, position, rotation }: {
     position: [number, number, number];
     rotation: [number, number, number];
 }) {
-    const fontSize = weight * 0.5; // Scale font size based on weight
+    const [hovered, setHovered] = useState(false);
+    const fontSize = weight * 0.5 * (hovered ? 1.4 : 1); // Scale up on hover
     const color = `hsl(${210 + weight * 60}, ${70 + weight * 30}%, ${50 + weight * 20}%)`;
     
     return (
-        <Text
-            position={position}
-            rotation={rotation}
-            fontSize={fontSize}
-            color={color}
-            anchorX="center"
-            anchorY="middle"
-        >
-            {word}
-        </Text>
+        <group>
+            <Text
+                position={position}
+                rotation={rotation}
+                fontSize={fontSize}
+                color={color}
+                anchorX="center"
+                anchorY="middle"
+                onPointerEnter={() => setHovered(true)}
+                onPointerLeave={() => setHovered(false)}
+            >
+                {word}
+            </Text>
+            <Tooltip 
+                text={word}
+                weight={weight}
+                visible={hovered}
+            />
+        </group>
     );
 }
 
