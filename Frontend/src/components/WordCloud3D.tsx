@@ -1,34 +1,34 @@
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Text, OrbitControls } from '@react-three/drei';
-import { Group, Vector3 } from 'three';
+import { Text, OrbitControls, Stars } from '@react-three/drei';
+import { Group } from 'three';
 import type { KeywordData } from '../types';
 import { Tooltip } from './Tooltip3D';
 
 interface WordCloudProps {
     keywords: KeywordData[];
+    theme: 'light' | 'dark';
 }
 
 // Word component to render individual words
-function Word({ word, weight, position, rotation }: {
+function Word({ word, weight, position }: {
     word: string;
     weight: number;
     position: [number, number, number];
-    rotation: [number, number, number];
 }) {
     const [hovered, setHovered] = useState(false);
-    const fontSize = weight * 0.5 * (hovered ? 1.4 : 1); // Scale up on hover
-    const color = `hsl(${210 + weight * 60}, ${70 + weight * 30}%, ${50 + weight * 20}%)`;
-    
+    const fontSize = weight * 1.2 * (hovered ? 1.5 : 1); // Consistent size with hover effect
+    const color = `hsl(${Math.random() * 360}, 70%, 60%)`; // Colorful words
+
     return (
         <group>
             <Text
                 position={position}
-                rotation={rotation}
                 fontSize={fontSize}
                 color={color}
                 anchorX="center"
                 anchorY="middle"
+                fontStyle={hovered ? 'italic' : 'normal'} // Use italic for hover effect
                 onPointerEnter={() => setHovered(true)}
                 onPointerLeave={() => setHovered(false)}
             >
@@ -38,6 +38,7 @@ function Word({ word, weight, position, rotation }: {
                 text={word}
                 weight={weight}
                 visible={hovered}
+                tooltipColor={color} // Pass color as a prop to Tooltip
             />
         </group>
     );
@@ -49,9 +50,9 @@ function WordGroup({ keywords }: WordCloudProps) {
 
     useFrame(({ clock }) => {
         if (groupRef.current) {
-            // Gentle rotation animation
-            groupRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.3) * 0.2;
-            groupRef.current.rotation.x = Math.cos(clock.getElapsedTime() * 0.3) * 0.2;
+            // Smooth rotation animation
+            groupRef.current.rotation.y = clock.getElapsedTime() * 0.2;
+            groupRef.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.1) * 0.2;
         }
     });
 
@@ -61,19 +62,12 @@ function WordGroup({ keywords }: WordCloudProps) {
                 // Calculate position on a sphere
                 const phi = Math.acos(-1 + (2 * i) / keywords.length);
                 const theta = Math.sqrt(keywords.length * Math.PI) * phi;
-                const radius = 5; // Adjust this to change the size of the sphere
+                const radius = 5; // Reduced radius for square layout
 
                 const position: [number, number, number] = [
                     radius * Math.cos(theta) * Math.sin(phi),
                     radius * Math.sin(theta) * Math.sin(phi),
                     radius * Math.cos(phi)
-                ];
-
-                // Random rotation for each word
-                const rotation: [number, number, number] = [
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
                 ];
 
                 return (
@@ -82,7 +76,6 @@ function WordGroup({ keywords }: WordCloudProps) {
                         word={keyword.word}
                         weight={keyword.weight}
                         position={position}
-                        rotation={rotation}
                     />
                 );
             })}
@@ -90,18 +83,21 @@ function WordGroup({ keywords }: WordCloudProps) {
     );
 }
 
-export function WordCloud3D({ keywords }: WordCloudProps) {
+export function WordCloud3D({ keywords, theme }: WordCloudProps) {
+    const backgroundColor = theme === 'light' ? '#ffffff' : '#000000';
+
     return (
-        <div className="word-cloud">
-            <Canvas camera={{ position: [0, 0, 15], fov: 50 }}>
-                <ambientLight intensity={0.5} />
+        <div className="word-cloud" style={{ width: '500px', height: '500px', margin: '0 auto' }}>
+            <Canvas camera={{ position: [0, 0, 15], fov: 50 }} style={{ background: backgroundColor }}>
+                <ambientLight intensity={0.7} />
                 <pointLight position={[10, 10, 10]} />
-                <WordGroup keywords={keywords} />
+                <Stars radius={50} depth={10} count={5000} factor={4} fade />
+                <WordGroup keywords={keywords} theme={theme} />
                 <OrbitControls 
                     enableZoom={true}
                     minDistance={10}
                     maxDistance={20}
-                    enablePan={false}
+                    enablePan={true}
                 />
             </Canvas>
         </div>

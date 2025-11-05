@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { KeywordData, APIError } from '../types';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:8001';
 
 export const analyzeArticle = async (url: string): Promise<KeywordData[]> => {
     try {

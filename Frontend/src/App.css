@@ -1,34 +1,189 @@
-.app {
+/* Theme Toggle */
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  background-color: var(--input-background);
+}
+
+/* Hide/show icons based on theme */
+:root .moon-icon {
+  display: none;
+}
+
+:root .sun-icon {
+  display: block;
+}
+
+[data-theme="dark"] .sun-icon {
+  display: none;
+}
+
+[data-theme="dark"] .moon-icon {
+  display: block;
+}
+
+/* Icon styles */
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* Add a subtle animation */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.theme-toggle:hover .sun-icon {
+  animation: rotate 2s linear infinite;
+}
+
+/* Light Theme */
+:root {
+  --background: #ffffff;
+  --text-color: #000000;
+  --primary-gradient: linear-gradient(45deg, #646cff, #61dafb);
+  --input-background: #f0f0f0;
+  --input-border: #ccc;
+  --error-background: #ff464640;
+  --error-color: #ff4646;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  --text-color: #ffffff;
+  --primary-gradient: linear-gradient(45deg, #646cff, #61dafb);
+  --input-background: #242424;
+  --input-border: #333;
+  --error-background: #ff464640;
+  --error-color: #ff4646;
+}
+
+.app-fullscreen {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: var(--background);
+  color: var(--text-color);
+  overflow-x: hidden;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.app-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  color: #ffffff;
-  overflow-x: hidden;
+  flex: 1;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.main-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.word-cloud-container {
+  width: 100%;
+  height: 45vh;
+  min-height: 300px;
+  margin-top: 2rem;
+}
+
+.sample-section {
+  margin: 2rem 0;
+  text-align: center;
+  width: 100%;
+}
+
+.sample-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.sample-button {
+  padding: 0.5rem 1rem;
+  background: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sample-button:hover:not(:disabled) {
+  background: var(--primary-gradient);
+  color: white;
+  border-color: transparent;
+}
+
+.sample-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(45deg, #646cff, #61dafb);
+  font-size: 3rem;
+  margin: 0 0 1rem;
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
 }
 
 p {
-  font-size: 1.2rem;
-  color: #888;
-  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin: 0 0 1.5rem;
+  opacity: 0.9;
 }
 
 .url-form {
   width: 100%;
   max-width: 800px;
-  margin-bottom: 2rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .input-group {
@@ -41,10 +196,25 @@ input[type="url"] {
   flex: 1;
   padding: 0.8rem 1rem;
   font-size: 1rem;
-  border: 1px solid #333;
+  border: 1px solid var(--input-border);
   border-radius: 4px;
-  background-color: #242424;
-  color: #fff;
+  background-color: var(--input-background);
+  color: var(--text-color);
+}
+
+/* Light theme specific styles */
+:root {
+  --input-text-color: #000000; /* Black text in light mode */
+}
+
+/* Dark theme specific styles */
+[data-theme="dark"] {
+  --input-text-color: #ffffff; /* White text in dark mode */
+}
+
+/* Apply the text color */
+input[type="url"] {
+  color: var(--input-text-color);
 }
 
 button {
@@ -52,7 +222,7 @@ button {
   font-size: 1rem;
   border: none;
   border-radius: 4px;
-  background: linear-gradient(45deg, #646cff, #61dafb);
+  background: var(--primary-gradient);
   color: #fff;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -83,24 +253,43 @@ button:not(:disabled):hover {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 4px;
-  background-color: #ff464640;
-  color: #ff4646;
+  background-color: var(--error-background);
+  color: var(--error-color);
   text-align: center;
 }
 
 .word-cloud {
   width: 100%;
-  height: 500px;
-  background: linear-gradient(180deg, #242424 0%, #1a1a1a 100%);
+  height: 100%;
+  background: var(--background);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--input-border);
 }
 
-@media (min-height: 800px) {
-  .word-cloud {
-    height: 600px;
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+  }
+  
+  .sample-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sample-button {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .word-cloud-container {
+    height: 50vh;
+    min-height: 400px;
   }
 }
 
