@@ -17,32 +17,44 @@ def fetch_article(url: str) -> str:
         ValueError: If URL is invalid or content can't be fetched
     """
     try:
+        print(f"Fetching article from URL: {url}")
         # Add headers to mimic a browser request
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
         
         # Fetch the webpage
+        print("Sending HTTP request...")
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
+        print(f"Got response: {response.status_code}")
         
         # Parse with readability-lxml
+        print("Parsing with readability-lxml...")
         doc = Document(response.text)
         
         # Extract the main content
+        print("Extracting main content...")
         content = doc.summary()
         
         # Use BeautifulSoup to clean HTML
+        print("Cleaning HTML with BeautifulSoup...")
         soup = BeautifulSoup(content, 'lxml')
         
         # Get text content
         text = soup.get_text()
+        print(f"Extracted text length: {len(text)} chars")
         
-        return clean_text(text)
+        cleaned_text = clean_text(text)
+        print(f"Cleaned text length: {len(cleaned_text)} chars")
+        
+        return cleaned_text
         
     except requests.RequestException as e:
+        print(f"RequestException: {str(e)}")
         raise ValueError(f"Failed to fetch article: {str(e)}")
     except Exception as e:
+        print(f"Exception in fetch_article: {str(e)}")
         raise ValueError(f"Error processing article content: {str(e)}")
 
 def clean_text(text: str) -> str:

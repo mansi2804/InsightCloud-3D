@@ -13,7 +13,7 @@ function LoadingSpinner() {
   );
 }
 
-export default function App() {
+function App() {
   const [status, setStatus] = useState<AnalyzeStatus>('idle');
   const [error, setError] = useState<string>();
   const [keywords, setKeywords] = useState<KeywordData[]>([]);
@@ -53,6 +53,5 @@ export default function App() {
     </div>
   );
 }
-}
 
-export default App
+export default App;
