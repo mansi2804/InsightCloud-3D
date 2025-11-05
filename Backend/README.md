@@ -1,53 +1,139 @@
 # InsightCloud-3D Backend
 
-FastAPI backend service for article analysis and keyword extraction.
+> FastAPI backend service for article analysis and keyword extraction with TF-IDF
+
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)](https://fastapi.tiangolo.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🚀 Features
 
-- Article text extraction
-- Topic/keyword analysis using TF-IDF
-- RESTful API with error handling
-- Comprehensive input validation
-- CORS support for frontend
-- Detailed API documentation
+- **Article Extraction**: Clean text extraction from any news article URL
+- **Keyword Analysis**: Advanced TF-IDF based keyword extraction
+- **RESTful API**: Fully documented endpoints with OpenAPI
+- **Input Validation**: Comprehensive request validation using Pydantic
+- **CORS Support**: Pre-configured for frontend integration
+- **Error Handling**: Meaningful error messages and status codes
+- **Async Support**: Built with async/await for better performance
 
 ## 🔧 Tech Stack
 
-- Python 3.8+
-- FastAPI
-- scikit-learn
-- readability-lxml
-- beautifulsoup4
-- pydantic
+- **Python 3.11+**: Core programming language
+- **FastAPI**: Modern, fast web framework for building APIs
+- **scikit-learn**: Machine learning for TF-IDF analysis
+- **readability-lxml**: Article content extraction
+- **beautifulsoup4**: HTML parsing and web scraping
+- **uvicorn**: ASGI server for production
+- **pydantic**: Data validation and settings management
 
 ## 📦 Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11 or higher
 - pip (Python package manager)
-- virtualenv or venv
+- virtualenv or venv (recommended)
 
-## 🛠️ Setup
+## 🛠️ Installation
 
-1. Create a virtual environment:
-```bash
-python -m venv venv
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/InsightCloud-3D.git
+   cd InsightCloud-3D/Backend
+   ```
 
-2. Activate the virtual environment:
-```bash
-# On macOS/Linux:
-source venv/bin/activate
+2. **Create and activate virtual environment**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   
+   # Activate virtual environment
+   # On macOS/Linux:
+   source venv/bin/activate
+   # On Windows:
+   .\venv\Scripts\activate
+   ```
 
-# On Windows:
-.\venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 🚀 Running the Server
+
+### Development Mode
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+- API will be available at: http://localhost:8000
+- Interactive API documentation: http://localhost:8000/docs
+- Alternative documentation: http://localhost:8000/redoc
+
+### Production Mode
+
+For production deployments, consider using:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+## 📚 API Documentation
+
+### Endpoints
+
+#### Analyze Article
+- **URL**: `/api/analyze`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "url": "https://example.com/article"
+  }
+  ```
+- **Success Response**:
+  ```json
+  {
+    "status": "success",
+    "keywords": [
+      {"word": "example", "weight": 0.95},
+      {"word": "analysis", "weight": 0.87}
+    ],
+    "title": "Article Title",
+    "summary": "Extracted article summary..."
+  }
+  ```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+pytest
+```
+
+## 🐳 Docker Support
+
+Build and run with Docker:
+
+```bash
+# Build the image
+docker build -t insightcloud-backend .
+
+# Run the container
+docker run -d -p 8000:8000 insightcloud-backend
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Start the FastAPI server with uvicorn:
 ```bash

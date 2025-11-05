@@ -1,53 +1,104 @@
-# React + TypeScript + Vite
+# InsightCloud-3D Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interactive 3D word cloud visualization built with React, TypeScript, and Three.js
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **3D Word Cloud**: Interactive visualization of article topics
+- **Responsive Design**: Works across desktop and tablet devices
+- **Theme Support**: Dark and light mode with smooth transitions
+- **Real-time Interaction**: Hover and click effects with tooltips
+- **Sample Articles**: Quick start with pre-loaded examples
+- **Loading States**: Visual feedback during data fetching
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19**: UI library with hooks
+- **TypeScript**: Type-safe JavaScript
+- **Vite**: Next-generation frontend tooling
+- **React Three Fiber**: 3D rendering with Three.js
+- **Tailwind CSS**: Utility-first CSS framework
+- **Axios**: Promise-based HTTP client
+- **ESLint**: Code quality and consistency
 
-## Expanding the ESLint configuration
+## 📦 Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+
+- npm or yarn
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+3. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🏗 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
+```
+src/
+├── assets/          # Static assets (images, fonts, etc.)
+├── components/      # Reusable React components
+│   ├── ui/          # UI components (buttons, inputs, etc.)
+│   ├── WordCloud3D/ # 3D word cloud visualization
+│   └── ...
+├── lib/            # Utility functions and API clients
+├── styles/         # Global styles and theme configuration
+└── types/          # TypeScript type definitions
+```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+## 🏗 Building for Production
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+This will create a production-ready build in the `dist` directory.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 import reactDom from 'eslint-plugin-react-dom'
 
 export default defineConfig([
