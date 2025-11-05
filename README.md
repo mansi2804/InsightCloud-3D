@@ -6,8 +6,6 @@
   [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
   [![React](https://img.shields.io/badge/React-19.x-61DAFB.svg)](https://reactjs.org/)
   [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)](https://fastapi.tiangolo.com/)
-
-  ![InsightCloud-3D Demo](https://via.placeholder.com/800x400.png?text=InsightCloud-3D+Demo)
 </div>
 
 ## 🌟 Features
