@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import './App.css';
 import { UrlForm } from './components/UrlForm';
+import { WordCloud3D } from './components/WordCloud3D';
 import { analyzeArticle } from './lib/api';
 import type { KeywordData, AnalyzeStatus } from './types';
 
-function App() {
+function LoadingSpinner() {
+  return (
+    <div className="loading-overlay">
+      <div className="loading-spinner" />
+    </div>
+  );
+}
+
+export default function App() {
   const [status, setStatus] = useState<AnalyzeStatus>('idle');
   const [error, setError] = useState<string>();
   const [keywords, setKeywords] = useState<KeywordData[]>([]);
@@ -34,14 +43,16 @@ function App() {
         error={error}
       />
 
-      {/* Word cloud will be added in the next step */}
-      {status === 'success' && (
-        <div style={{ color: '#888' }}>
-          {keywords.length} keywords extracted
-        </div>
+      {status === 'loading' && <LoadingSpinner />}
+
+      {status === 'success' && keywords.length > 0 && (
+        <Suspense fallback={<LoadingSpinner />}>
+          <WordCloud3D keywords={keywords} />
+        </Suspense>
       )}
     </div>
   );
+}
 }
 
 export default App
