@@ -23,3 +23,66 @@ p {
   color: #888;
   margin-bottom: 2rem;
 }
+
+.url-form {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+input[type="url"] {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #242424;
+  color: #fff;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background: linear-gradient(45deg, #646cff, #61dafb);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+.sample-urls {
+  text-align: center;
+}
+
+.sample-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.error-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #ff464640;
+  color: #ff4646;
+  text-align: center;
+}
