@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .utils import fetch_article
+from .nlp import KeywordExtractor
 
 app = FastAPI(title="InsightCloud-3D API")
+keyword_extractor = KeywordExtractor()
 
 # Configure CORS for frontend
 app.add_middleware(
